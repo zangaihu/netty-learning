@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author sunhu
@@ -21,8 +22,9 @@ public class BIOServer {
             System.out.println("wait....");
             // 此时阻塞
             Socket socket = serverSocket.accept();
-            ExecutorService executorService = Executors.newCachedThreadPool();
-            executorService.execute(() -> handler(socket));
+            ThreadPoolExecutor threadPoolExecutor =
+                    new ThreadPoolExecutor(10, 20, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<>(512), new ThreadPoolExecutor.DiscardPolicy());
+            threadPoolExecutor.execute(() -> handler(socket));
         }
 
     }
