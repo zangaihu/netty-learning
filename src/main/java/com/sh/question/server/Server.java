@@ -29,9 +29,9 @@ public class Server {
                         ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE,
                                 ClassResolvers.weakCachingConcurrentResolver(null))); // 最大长度
                         ch.pipeline().addLast(new S_I_1());
-                        ch.pipeline().addLast(new S_O_2());
                         ch.pipeline().addLast(new S_I_2());
                         ch.pipeline().addLast(new S_O_1());
+                        ch.pipeline().addLast(new S_O_2());
 
                         ch.pipeline().addLast(new MyHandler());
                     }
